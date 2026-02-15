@@ -1,0 +1,1460 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>SR COMMUNITY - PROFESSIONAL PREDICTION</title>
+
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Orbitron', 'Share Tech Mono', monospace;
+            position: relative;
+        }
+
+        /* ===== PREMIUM LOADING SCREEN ===== */
+        #loadingScreen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #050708, #000000);
+            z-index: 99999;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loading-container {
+            position: relative;
+            width: 220px; height: 220px;
+            perspective: 1000px;
+        }
+
+        .loading-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            box-shadow: 0 0 30px currentColor;
+            animation: spin3D 2s infinite linear;
+            transform-style: preserve-3d;
+        }
+
+        .ring-1 {
+            width: 100%; height: 100%;
+            border-top-color: #ff00c8;
+            border-right-color: #00ffff;
+            border-bottom-color: #ffaa00;
+            border-left-color: #bf00ff;
+            box-shadow: 0 0 50px #ff00c8, 0 0 80px #00ffff, 0 0 100px #bf00ff;
+            animation: spin3D 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ring-2 {
+            width: 80%; height: 80%;
+            top: 10%; left: 10%;
+            border-top-color: #ffff00;
+            border-right-color: #ff6600;
+            border-bottom-color: #00ffaa;
+            border-left-color: #ff44aa;
+            box-shadow: 0 0 40px #ffff00, 0 0 60px #ff6600;
+            animation: spin3DReverse 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ring-3 {
+            width: 60%; height: 60%;
+            top: 20%; left: 20%;
+            border-top-color: #ff44aa;
+            border-right-color: #00ccff;
+            border-bottom-color: #aa00ff;
+            border-left-color: #ffaa00;
+            box-shadow: 0 0 30px #ff44aa, 0 0 50px #00ccff;
+            animation: spin3D 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes spin3D {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg); }
+        }
+
+        @keyframes spin3DReverse {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(-360deg) rotateY(-180deg) rotateZ(-360deg); }
+        }
+
+        .loading-logo {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 
+                0 0 0 4px rgba(255, 0, 200, 0.3),
+                0 0 0 8px rgba(0, 255, 255, 0.2),
+                0 0 0 12px rgba(191, 0, 255, 0.1),
+                0 0 60px #ff00c8,
+                0 0 100px #00ffff;
+            animation: logoPulseNeon 1.5s infinite alternate;
+        }
+
+        @keyframes logoPulseNeon {
+            0% { box-shadow: 0 0 0 4px rgba(255,0,200,0.3), 0 0 0 8px rgba(0,255,255,0.2), 0 0 0 12px rgba(191,0,255,0.1), 0 0 60px #ff00c8, 0 0 100px #00ffff; }
+            100% { box-shadow: 0 0 0 6px rgba(255,0,200,0.4), 0 0 0 12px rgba(0,255,255,0.3), 0 0 0 18px rgba(191,0,255,0.2), 0 0 80px #ff00c8, 0 0 140px #00ffff; }
+        }
+
+        .loading-text {
+            margin-top: 40px;
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff00c8, #00ffff, #ffaa00, #bf00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: textNeonFlow 3s infinite;
+            letter-spacing: 6px;
+            text-shadow: 0 0 20px rgba(255,0,200,0.5);
+        }
+
+        @keyframes textNeonFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .loading-bar-container {
+            width: 280px;
+            height: 6px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 3px;
+            margin-top: 25px;
+            padding: 2px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff00c8, #00ffff, #ffaa00, #bf00ff);
+            border-radius: 3px;
+            animation: loadProgressPremium 3s ease-in-out forwards;
+            box-shadow: 0 0 20px #ff00c8, 0 0 40px #00ffff;
+        }
+
+        @keyframes loadProgressPremium {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .loading-status {
+            margin-top: 20px;
+            font-size: 14px;
+            background: linear-gradient(45deg, #ff99cc, #99ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: statusFade 2s infinite;
+        }
+
+        @keyframes statusFade {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ===== PAGE 1: LOGIN PAGE ===== */
+        #loginPage {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #030003;
+            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        #loginPage.active { opacity: 1; visibility: visible; }
+
+        .cyber-grid-soft {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(180, 60, 120, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(80, 40, 160, 0.06) 1px, transparent 1px);
+            background-size: 45px 45px;
+            animation: gridMoveSoft 20s linear infinite;
+            transform: perspective(500px) rotateX(60deg);
+            top: -50%; left: -50%;
+            opacity: 0.3;
+            z-index: 6;
+        }
+
+        @keyframes gridMoveSoft {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(45px); }
+        }
+
+        .scanlines-soft {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(160, 40, 100, 0.02) 0px,
+                rgba(0, 0, 0, 0.92) 1px,
+                #030003 2px
+            );
+            z-index: 7;
+            pointer-events: none;
+        }
+
+        .login-container {
+            width: 320px;
+            position: relative;
+            z-index: 20;
+            animation: containerFloatSoft 6s ease-in-out infinite;
+        }
+
+        @keyframes containerFloatSoft {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .login-box {
+            background: rgba(10, 4, 8, 0.8);
+            border: 2px solid var(--primary-color);
+            border-radius: 30px 0 30px 0;
+            box-shadow: 
+                0 0 40px var(--primary-glow),
+                0 0 80px var(--secondary-glow),
+                inset 0 0 30px var(--primary-glow);
+            padding: 25px 20px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            animation: scanLineTop 3s infinite;
+        }
+
+        @keyframes scanLineTop {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .voice-welcome-section {
+            background: rgba(20, 10, 16, 0.6);
+            border: 1px solid var(--primary-color);
+            border-radius: 15px 0 15px 0;
+            padding: 16px 8px;
+            margin-bottom: 18px;
+            text-align: center;
+            box-shadow: inset 0 0 20px var(--primary-glow);
+        }
+
+        .voice-icon {
+            font-size: 36px;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px var(--accent-glow);
+            animation: iconPulse 2s infinite alternate;
+        }
+
+        @keyframes iconPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .voice-text {
+            font-size: 18px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--text-color1), var(--text-color2), var(--text-color3), var(--text-color4));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: textGlowSoft 8s ease infinite;
+            letter-spacing: 3px;
+        }
+
+        @keyframes textGlowSoft {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .voice-subtext {
+            font-size: 10px;
+            color: var(--accent-color);
+            opacity: 0.8;
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        .sound-waves {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 10px;
+            height: 15px;
+            align-items: flex-end;
+        }
+
+        .wave-bar {
+            width: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+            animation: waveAnim 1s infinite ease-in-out;
+        }
+
+        @keyframes waveAnim {
+            0%, 100% { height: 4px; }
+            50% { height: 15px; }
+        }
+
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-glow);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .login-logo:active {
+            transform: scale(0.9);
+        }
+
+        .login-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .security-badge {
+            display: inline-block;
+            font-size: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: var(--accent-color);
+            margin-top: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-input-group {
+            margin-bottom: 15px;
+        }
+
+        .login-label {
+            display: block;
+            font-size: 10px;
+            color: var(--text-color1);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .login-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .login-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .login-status {
+            font-size: 11px;
+            text-align: center;
+            margin-bottom: 15px;
+            min-height: 16px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .login-status.error { color: #ff4444; text-shadow: 0 0 10px rgba(255, 68, 68, 0.5); }
+        .login-status.success { color: #00ff88; text-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+        .login-status.warning { color: #ffaa00; text-shadow: 0 0 10px rgba(255, 170, 0, 0.5); }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px var(--primary-glow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--primary-glow);
+            filter: brightness(1.2);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-device-id {
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            margin-top: 15px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* THEME DEFINITIONS */
+        .login-theme1 {
+            --primary-color: rgba(0, 255, 255, 0.8); --primary-glow: rgba(0, 255, 255, 0.5);
+            --secondary-color: rgba(0, 150, 255, 0.8); --secondary-glow: rgba(0, 150, 255, 0.5);
+            --tertiary-color: rgba(0, 255, 150, 0.8); --tertiary-glow: rgba(0, 255, 150, 0.5);
+            --quaternary-color: rgba(0, 100, 255, 0.8); --quaternary-glow: rgba(0, 100, 255, 0.5);
+            --accent-color: rgba(150, 255, 255, 0.9); --accent-glow: rgba(150, 255, 255, 0.6);
+            --text-color1: #b3ffff; --text-color2: #b3ecff; --text-color3: #b3ffec; --text-color4: #b3ccff;
+        }
+        .login-theme2 {
+            --primary-color: rgba(255, 0, 200, 0.8); --primary-glow: rgba(255, 0, 200, 0.5);
+            --secondary-color: rgba(191, 0, 255, 0.8); --secondary-glow: rgba(191, 0, 255, 0.5);
+            --tertiary-color: rgba(255, 0, 100, 0.8); --tertiary-glow: rgba(255, 0, 100, 0.5);
+            --quaternary-color: rgba(150, 0, 255, 0.8); --quaternary-glow: rgba(150, 0, 255, 0.5);
+            --accent-color: rgba(255, 150, 255, 0.9); --accent-glow: rgba(255, 150, 255, 0.6);
+            --text-color1: #ffb3ec; --text-color2: #ecb3ff; --text-color3: #ffb3cc; --text-color4: #dbb3ff;
+        }
+        .login-theme3 {
+            --primary-color: rgba(0, 255, 100, 0.8); --primary-glow: rgba(0, 255, 100, 0.5);
+            --secondary-color: rgba(0, 200, 255, 0.8); --secondary-glow: rgba(0, 200, 255, 0.5);
+            --tertiary-color: rgba(100, 255, 0, 0.8); --tertiary-glow: rgba(100, 255, 0, 0.5);
+            --quaternary-color: rgba(0, 255, 200, 0.8); --quaternary-glow: rgba(0, 255, 200, 0.5);
+            --accent-color: rgba(150, 255, 200, 0.9); --accent-glow: rgba(150, 255, 200, 0.6);
+            --text-color1: #b3ffcc; --text-color2: #b3ecff; --text-color3: #ccffb3; --text-color4: #b3ffec;
+        }
+        .login-theme4 {
+            --primary-color: rgba(255, 150, 0, 0.8); --primary-glow: rgba(255, 150, 0, 0.5);
+            --secondary-color: rgba(255, 50, 0, 0.8); --secondary-glow: rgba(255, 50, 0, 0.5);
+            --tertiary-color: rgba(255, 200, 0, 0.8); --tertiary-glow: rgba(255, 200, 0, 0.5);
+            --quaternary-color: rgba(255, 100, 0, 0.8); --quaternary-glow: rgba(255, 100, 0, 0.5);
+            --accent-color: rgba(255, 200, 150, 0.9); --accent-glow: rgba(255, 200, 150, 0.6);
+            --text-color1: #ffdbb3; --text-color2: #ffc2b3; --text-color3: #ffecb3; --text-color4: #ffccb3;
+        }
+        .login-theme5 {
+            --primary-color: rgba(255, 255, 0, 0.8); --primary-glow: rgba(255, 255, 0, 0.5);
+            --secondary-color: rgba(200, 255, 0, 0.8); --secondary-glow: rgba(200, 255, 0, 0.5);
+            --tertiary-color: rgba(255, 200, 0, 0.8); --tertiary-glow: rgba(255, 200, 0, 0.5);
+            --quaternary-color: rgba(150, 255, 0, 0.8); --quaternary-glow: rgba(150, 255, 0, 0.5);
+            --accent-color: rgba(255, 255, 150, 0.9); --accent-glow: rgba(255, 255, 150, 0.6);
+            --text-color1: #ffffb3; --text-color2: #ecffb3; --text-color3: #ffecb3; --text-color4: #dbffb3;
+        }
+        .login-theme6 {
+            --primary-color: rgba(255, 255, 255, 0.8); --primary-glow: rgba(255, 255, 255, 0.5);
+            --secondary-color: rgba(200, 200, 200, 0.8); --secondary-glow: rgba(200, 200, 200, 0.5);
+            --tertiary-color: rgba(150, 150, 150, 0.8); --tertiary-glow: rgba(150, 150, 150, 0.5);
+            --quaternary-color: rgba(100, 100, 100, 0.8); --quaternary-glow: rgba(100, 100, 100, 0.5);
+            --accent-color: rgba(220, 220, 220, 0.9); --accent-glow: rgba(220, 220, 220, 0.6);
+            --text-color1: #ffffff; --text-color2: #e6e6e6; --text-color3: #cccccc; --text-color4: #b3b3b3;
+        }
+        .login-theme7 {
+            --primary-color: rgba(255, 50, 50, 0.8); --primary-glow: rgba(255, 50, 50, 0.5);
+            --secondary-color: rgba(255, 0, 100, 0.8); --secondary-glow: rgba(255, 0, 100, 0.5);
+            --tertiary-color: rgba(255, 100, 0, 0.8); --tertiary-glow: rgba(255, 100, 0, 0.5);
+            --quaternary-color: rgba(200, 0, 0, 0.8); --quaternary-glow: rgba(200, 0, 0, 0.5);
+            --accent-color: rgba(255, 150, 150, 0.9); --accent-glow: rgba(255, 150, 150, 0.6);
+            --text-color1: #ffb3b3; --text-color2: #ffb3cc; --text-color3: #ffccb3; --text-color4: #ff9999;
+        }
+        .login-theme8 {
+            --primary-color: rgba(150, 0, 255, 0.8); --primary-glow: rgba(150, 0, 255, 0.5);
+            --secondary-color: rgba(100, 0, 255, 0.8); --secondary-glow: rgba(100, 0, 255, 0.5);
+            --tertiary-color: rgba(200, 0, 255, 0.8); --tertiary-glow: rgba(200, 0, 255, 0.5);
+            --quaternary-color: rgba(50, 0, 255, 0.8); --quaternary-glow: rgba(50, 0, 255, 0.5);
+            --accent-color: rgba(200, 150, 255, 0.9); --accent-glow: rgba(200, 150, 255, 0.6);
+            --text-color1: #dbb3ff; --text-color2: #ccb3ff; --text-color3: #ecb3ff; --text-color4: #b399ff;
+        }
+        .login-theme9 {
+            --primary-color: rgba(255, 50, 150, 0.8); --primary-glow: rgba(255, 50, 150, 0.5);
+            --secondary-color: rgba(255, 0, 150, 0.8); --secondary-glow: rgba(255, 0, 150, 0.5);
+            --tertiary-color: rgba(255, 100, 0, 0.8); --tertiary-glow: rgba(255, 100, 0, 0.5);
+            --quaternary-color: rgba(255, 0, 100, 0.8); --quaternary-glow: rgba(255, 0, 100, 0.5);
+            --accent-color: rgba(255, 150, 150, 0.9); --accent-glow: rgba(255, 150, 150, 0.6);
+            --text-color1: #ffb3b3; --text-color2: #ffb3ec; --text-color3: #ffcc99; --text-color4: #ffb3cc;
+        }
+        .login-theme10 {
+            --primary-color: rgba(100, 100, 255, 0.8); --primary-glow: rgba(100, 100, 255, 0.5);
+            --secondary-color: rgba(0, 200, 255, 0.8); --secondary-glow: rgba(0, 200, 255, 0.5);
+            --tertiary-color: rgba(150, 100, 255, 0.8); --tertiary-glow: rgba(150, 100, 255, 0.5);
+            --quaternary-color: rgba(0, 150, 255, 0.8); --quaternary-glow: rgba(0, 150, 255, 0.5);
+            --accent-color: rgba(180, 180, 255, 0.9); --accent-glow: rgba(180, 180, 255, 0.6);
+            --text-color1: #ccccff; --text-color2: #b3ecff; --text-color3: #dbccff; --text-color4: #b3ccff;
+        }
+        .login-theme11 {
+            --primary-color: rgba(255, 200, 0, 0.8); --primary-glow: rgba(255, 200, 0, 0.5);
+            --secondary-color: rgba(255, 100, 0, 0.8); --secondary-glow: rgba(255, 100, 0, 0.5);
+            --tertiary-color: rgba(255, 255, 0, 0.8); --tertiary-glow: rgba(255, 255, 0, 0.5);
+            --quaternary-color: rgba(255, 150, 0, 0.8); --quaternary-glow: rgba(255, 150, 0, 0.5);
+            --accent-color: rgba(255, 220, 120, 0.9); --accent-glow: rgba(255, 220, 120, 0.6);
+            --text-color1: #ffffb3; --text-color2: #ffcc99; --text-color3: #ffffcc; --text-color4: #ffdb99;
+        }
+        .login-theme12 {
+            --primary-color: rgba(0, 255, 255, 0.8); --primary-glow: rgba(0, 255, 255, 0.5);
+            --secondary-color: rgba(0, 200, 255, 0.8); --secondary-glow: rgba(0, 200, 255, 0.5);
+            --tertiary-color: rgba(0, 255, 200, 0.8); --tertiary-glow: rgba(0, 255, 200, 0.5);
+            --quaternary-color: rgba(0, 150, 255, 0.8); --quaternary-glow: rgba(0, 150, 255, 0.5);
+            --accent-color: rgba(150, 255, 255, 0.9); --accent-glow: rgba(150, 255, 255, 0.6);
+            --text-color1: #b3ffff; --text-color2: #b3ecff; --text-color3: #b3ffec; --text-color4: #b3ccff;
+        }
+        .login-theme13 {
+            --primary-color: rgba(200, 0, 255, 0.8); --primary-glow: rgba(200, 0, 255, 0.5);
+            --secondary-color: rgba(255, 0, 200, 0.8); --secondary-glow: rgba(255, 0, 200, 0.5);
+            --tertiary-color: rgba(150, 0, 255, 0.8); --tertiary-glow: rgba(150, 0, 255, 0.5);
+            --quaternary-color: rgba(255, 0, 150, 0.8); --quaternary-glow: rgba(255, 0, 150, 0.5);
+            --accent-color: rgba(220, 150, 255, 0.9); --accent-glow: rgba(220, 150, 255, 0.6);
+            --text-color1: #ecb3ff; --text-color2: #ffb3ec; --text-color3: #dbb3ff; --text-color4: #ffb3cc;
+        }
+        .login-theme14 {
+            --primary-color: rgba(0, 255, 150, 0.8); --primary-glow: rgba(0, 255, 150, 0.5);
+            --secondary-color: rgba(150, 255, 0, 0.8); --secondary-glow: rgba(150, 255, 0, 0.5);
+            --tertiary-color: rgba(0, 255, 100, 0.8); --tertiary-glow: rgba(0, 255, 100, 0.5);
+            --quaternary-color: rgba(100, 255, 0, 0.8); --quaternary-glow: rgba(100, 255, 0, 0.5);
+            --accent-color: rgba(150, 255, 200, 0.9); --accent-glow: rgba(150, 255, 200, 0.6);
+            --text-color1: #b3ffec; --text-color2: #dbff99; --text-color3: #b3ffcc; --text-color4: #ccff99;
+        }
+        .login-theme15 {
+            --primary-color: rgba(220, 80, 140, 0.8); --primary-glow: rgba(220, 80, 140, 0.5);
+            --secondary-color: rgba(200, 60, 140, 0.8); --secondary-glow: rgba(200, 60, 140, 0.5);
+            --tertiary-color: rgba(200, 40, 140, 0.8); --tertiary-glow: rgba(200, 40, 140, 0.5);
+            --quaternary-color: rgba(200, 20, 140, 0.8); --quaternary-glow: rgba(200, 20, 140, 0.5);
+            --accent-color: rgba(240, 120, 180, 0.9); --accent-glow: rgba(240, 120, 180, 0.6);
+            --text-color1: #ffccd9; --text-color2: #ffb3cc; --text-color3: #ffb3d9; --text-color4: #ffcce6;
+        }
+
+        /* ===== PAGE 2: PREDICTION PAGE — PERFECT SIZING & ENHANCED COLORS ===== */
+        #predictionPage {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000c14;
+            z-index: 5;
+            opacity: 0; visibility: hidden;
+            transition: 0.5s;
+        }
+
+        #predictionPage.active { opacity: 1; visibility: visible; }
+
+        .matrix-rain { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            opacity: 0.1; 
+            z-index: 1; 
+        }
+        
+        .scanlines {
+            position: fixed; 
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,200,200,0.02) 0px, transparent 2px);
+            z-index: 2; 
+            pointer-events: none;
+        }
+
+        /* ===== PREDICTION BOX — ENHANCED COLORS & PERFECT SIZING ===== */
+        .box-container {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            width: 160px;
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.95), rgba(30, 30, 30, 0.85));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--box-border);
+            border-radius: 0 25px 25px 0;
+            box-shadow: 
+                10px 0 50px rgba(0, 0, 0, 0.8),
+                0 0 30px var(--box-glow);
+            padding: 15px 10px;
+            z-index: 9999;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            overflow: visible;
+        }
+
+        .box-container::before {
+            content: '';
+            position: absolute;
+            top: -10px; left: -4px;
+            width: 20px; height: 20px;
+            border-top: 4px solid var(--box-border);
+            border-left: 4px solid var(--box-border);
+        }
+
+        .box-container::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: -4px;
+            width: 20px; height: 20px;
+            border-bottom: 4px solid var(--box-border);
+            border-left: 4px solid var(--box-border);
+        }
+
+        .box-container:active { 
+            cursor: grabbing;
+            transform: scale(0.98);
+        }
+
+        .box {
+            background: transparent;
+            color: #ffffff;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        /* Loading Animation */
+        .prediction-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 16px;
+        }
+
+        .loading-spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px #ffffff;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header - Fixed Size */
+        .box-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(var(--box-border-rgb), 0.5);
+            height: 24px;
+        }
+        
+        .header-logo { 
+            width: 16px; 
+            height: 16px; 
+            border-radius: 50%; 
+            border: 1.5px solid var(--box-border); 
+            box-shadow: 0 0 15px var(--box-glow);
+        }
+        
+        .title { 
+            font-size: 8px; 
+            font-weight: 900; 
+            color: var(--box-border); 
+            text-shadow: 0 0 5px var(--box-glow);
+            letter-spacing: 1.5px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .tg-link { 
+            background: rgba(var(--box-border-rgb), 0.25);
+            border-radius: 50%; 
+            padding: 3px;
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--box-border);
+            transition: all 0.3s;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tg-link:hover {
+            transform: scale(1.1);
+            background: rgba(var(--box-border-rgb), 0.5);
+        }
+
+        .tg-link img {
+            width: 10px;
+            height: 10px;
+            filter: brightness(1.2);
+        }
+
+        /* Signal Section - Fixed Sizes */
+        .signal-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(var(--box-border-rgb), 0.3);
+            border-radius: 15px;
+            padding: 12px 8px;
+            margin-top: 10px;
+            position: relative;
+            text-align: center;
+        }
+
+        .signal-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--box-border), transparent);
+            animation: scanLine 3s infinite;
+        }
+
+        @keyframes scanLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .server-panel-title { 
+            font-size: 8px; 
+            color: #ffffff; 
+            font-weight: 900; 
+            text-align: center;
+            background: rgba(var(--box-border-rgb), 0.2);
+            border-radius: 4px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            height: 18px;
+            line-height: 18px;
+            text-transform: uppercase;
+        }
+
+        .time-display { 
+            font-size: 14px; 
+            font-weight: 900; 
+            color: #ffffff; 
+            margin-bottom: 4px;
+            font-family: 'Share Tech Mono', monospace;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .period-display { 
+            font-size: 10px; 
+            color: var(--box-border); 
+            font-weight: 700; 
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .signal-result { 
+            font-size: 28px; 
+            font-weight: 900; 
+            margin: 10px 0;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px currentColor;
+            animation: signalPulse 1.5s infinite alternate;
+        }
+
+        @keyframes signalPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .big-signal { color: #00ff88; }
+        .small-signal { color: #ff3366; }
+
+        .timer-container { 
+            font-size: 12px; 
+            color: #ffffff; 
+            font-weight: 700;
+            margin-top: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px;
+            border-radius: 8px;
+            display: inline-block;
+            min-width: 60px;
+        }
+
+        .join-tg-btn {
+            background: linear-gradient(90deg, var(--btn-start), #000);
+            border: 1px solid var(--box-border);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 8px;
+            width: 100%;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px var(--btn-glow);
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        .join-tg-btn:hover {
+            background: rgba(var(--btn-start-rgb), 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--btn-glow);
+        }
+
+        /* Action Buttons - Fixed Size */
+        .action-row { 
+            display: flex; 
+            gap: 6px; 
+            margin-top: 6px; 
+        }
+        
+        .btn-small { 
+            flex: 1; 
+            padding: 6px 0; 
+            border-radius: 4px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            font-weight: 900; 
+            font-size: 9px; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            color: white;
+            height: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-hide { background: rgba(50, 50, 50, 0.8); }
+        .btn-exit { background: rgba(200, 0, 0, 0.6); }
+        .btn-small:hover { transform: scale(1.05); filter: brightness(1.2); }      
+        #devID { 
+            font-size: 5px; 
+            color: rgba(255,255,255,0.4); 
+            text-align: center; 
+            margin-top: 4px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        #floatingLogo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 20px #00ffff;
+            display: none;
+            z-index: 10000;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        #floatingLogo img { width: 100%; height: 100%; }
+
+        /* ===== 10 PREDICTION THEMES ===== */
+        .theme1 { --box-border: #00ffff; --box-glow: rgba(0,255,255,0.6); --box-border-rgb: 0,255,255; --btn-start: #0088ff; --btn-glow: rgba(0,136,255,0.6); --btn-start-rgb: 0,136,255; }
+        .theme2 { --box-border: #ff00ff; --box-glow: rgba(255,0,255,0.6); --box-border-rgb: 255,0,255; --btn-start: #ff0088; --btn-glow: rgba(255,0,136,0.6); --btn-start-rgb: 255,0,136; }
+        .theme3 { --box-border: #00ff00; --box-glow: rgba(0,255,0,0.6); --box-border-rgb: 0,255,0; --btn-start: #00aa00; --btn-glow: rgba(0,170,0,0.6); --btn-start-rgb: 0,170,0; }
+        .theme4 { --box-border: #ffaa00; --box-glow: rgba(255,170,0,0.6); --box-border-rgb: 255,170,0; --btn-start: #ff6600; --btn-glow: rgba(255,102,0,0.6); --btn-start-rgb: 255,102,0; }
+        .theme5 { --box-border: #ff0000; --box-glow: rgba(255,0,0,0.6); --box-border-rgb: 255,0,0; --btn-start: #aa0000; --btn-glow: rgba(170,0,0,0.6); --btn-start-rgb: 170,0,0; }
+        .theme6 { --box-border: #ffffff; --box-glow: rgba(255,255,255,0.6); --box-border-rgb: 255,255,255; --btn-start: #888888; --btn-glow: rgba(136,136,136,0.6); --btn-start-rgb: 136,136,136; }
+        .theme7 { --box-border: #ffff00; --box-glow: rgba(255,255,0,0.6); --box-border-rgb: 255,255,0; --btn-start: #aaaa00; --btn-glow: rgba(170,170,0,0.6); --btn-start-rgb: 170,170,0; }
+        .theme8 { --box-border: #0000ff; --box-glow: rgba(0,0,255,0.6); --box-border-rgb: 0,0,255; --btn-start: #0000aa; --btn-glow: rgba(0,0,170,0.6); --btn-start-rgb: 0,0,170; }
+        .theme9 { --box-border: #ff0088; --box-glow: rgba(255,0,136,0.6); --box-border-rgb: 255,0,136; --btn-start: #aa0055; --btn-glow: rgba(170,0,85,0.6); --btn-start-rgb: 170,0,85; }
+        .theme10 { --box-border: #8800ff; --box-glow: rgba(136,0,255,0.6); --box-border-rgb: 136,0,255; --btn-start: #5500aa; --btn-glow: rgba(85,0,170,0.6); --btn-start-rgb: 85,0,170; }
+
+        .iframe-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 3;
+        }
+        .iframe-container iframe {
+            width: 100%; height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+  
+    <!-- ===== LOADING SCREEN ===== -->
+    <div id="loadingScreen">
+        <div class="loading-container">
+            <div class="loading-ring ring-1"></div>
+            <div class="loading-ring ring-2"></div>
+            <div class="loading-ring ring-3"></div>
+            <img src="https://iili.io/qHpgzIn.md.jpg" class="loading-logo">
+        </div>
+        <div class="loading-text">SR COMMUNITY</div>
+        <div class="loading-bar-container">
+            <div class="loading-progress"></div>
+        </div>
+        <div class="loading-status">INITIALIZING SYSTEM...</div>
+    </div>
+
+    <!-- ===== PAGE 1: LOGIN PAGE ===== -->
+    <div id="loginPage" class="active login-theme2">
+        <div class="cyber-grid-soft"></div>
+        <div class="scanlines-soft"></div>
+        
+        <div class="login-container">
+            <div class="login-box">
+                <div class="voice-welcome-section" id="voiceWelcome">
+                    <div class="voice-icon">⚡🔥</div>
+                    <div class="voice-text">SR COMMUNITY</div>
+                    <div class="voice-subtext">PROFESSIONAL PREDICTION SYSTEM</div>
+                    <div class="sound-waves">
+                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                        <div class="wave-bar"></div><div class="wave-bar"></div>
+                    </div>
+                </div>
+                <div class="login-header">
+                    <img src="https://iili.io/qHpgzIn.md.jpg" class="login-logo" id="loginLogo">
+                    <div class="login-title">SR COMMUNITY</div>
+                    <span class="security-badge">⛓️ ADVANCED ALGORITHM v2.0</span>
+                </div>
+                <div class="login-input-group">
+                    <label class="login-label">🆔 UID NUMBER</label>
+                    <input type="text" id="loginUid" class="login-input" placeholder="ENTER UID" maxlength="20">
+                </div>
+                <div class="login-input-group">
+                    <label class="login-label">🔑 PASSWORD</label>
+                    <input type="password" id="loginPassword" class="login-input" placeholder="ENTER PASSWORD">
+                </div>
+                <div id="loginStatus" class="login-status"></div>
+                <button class="login-btn" id="loginBtn">🔻 LOGIN SYSTEM</button>
+                <div class="login-device-id" id="loginDeviceId">ID: DEV-1771066424...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAGE 2: PREDICTION PAGE ===== -->
+    <div id="predictionPage">
+        <canvas id="matrixRain" class="matrix-rain"></canvas>
+        <div class="scanlines"></div>
+
+        <div class="iframe-container">
+            <iframe src="https://tkclub2.com/#/register?invitationCode=67313217616"></iframe>
+        </div>
+
+        <!-- MAIN PREDICTION BOX -->
+        <div class="box-container" id="mainContainer">
+            <div class="box">
+                <div class="prediction-loading" id="predictionLoading">
+                    <div class="loading-spinner"></div>
+                </div>
+                <div class="box-header">
+                    <div style="display:flex; align-items:center; gap:4px;">
+                        <img src="https://iili.io/qHpgzIn.md.jpg" class="header-logo">
+                        <span class="title">SR COMMUNITY</span>
+                    </div>
+                    <a href="https://t.me/TRADER_2BROTHERS" target="_blank" class="tg-link">
+                        <img src="https://iili.io/qHpgzIn.md.jpg">
+                    </a>
+                </div>
+
+                <div class="signal-section">
+                    <div class="server-panel-title">🔮 PROFESSIONAL ALGORITHM</div>
+                    <div class="time-display" id="timeText">00:00:00</div>
+                    <div class="period-display">⏳ <span id="periodNumber">11275</span></div>
+                    <div id="signalResult" class="signal-result big-signal">BIG</div>
+                    <div class="timer-container">⏰ <span id="timerCount">30</span>s</div>
+                    <button class="join-tg-btn" id="joinTelegramBtn">⚡ JOIN TG</button>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-small btn-hide" id="hideBtn">HIDE</button>
+                    <button class="btn-small btn-exit" id="exitBtn">EXIT</button>
+                </div>
+                <div id="devID">ID: DEV-1771066424...</div>
+            </div>
+        </div>
+
+        <div id="floatingLogo"><img src="https://iili.io/qHpgzIn.md.jpg"></div>
+    </div>
+
+    <script>
+        // ========== VOICE WELCOME ==========
+        function playEliteVoice() {
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance(
+                "Welcome to SR COMMUNITY Professional Prediction System. Advanced algorithm activated."
+            );
+            msg.lang = 'en-US'; msg.rate = 0.95; msg.pitch = 1.15; msg.volume = 1.2;
+            const voices = window.speechSynthesis.getVoices();
+            const preferred = voices.find(v => v.name.includes('Google UK') || v.name.includes('Microsoft Mark') || v.name.includes('Daniel'));
+            if (preferred) msg.voice = preferred;
+            window.speechSynthesis.speak(msg);
+        }
+
+        // ========== DEVICE ID ==========
+        function generateHash(input) { let h=0; for(let i=0; i<input.length; i++) { h = ((h<<5)-h) + input.charCodeAt(i); h = h & h; } return Math.abs(h).toString(16); }
+        let deviceId = localStorage.getItem("secure_device_id");
+        if (!deviceId) {
+            deviceId = "DEV-" + Date.now() + "-" + Math.random().toString(36).substr(2,6) + "-" + generateHash(navigator.userAgent).substr(0,6);
+            localStorage.setItem("secure_device_id", deviceId);
+        }
+        
+        // ========== LOGIN ATTEMPT ==========
+        function showStatus(msg, type) {
+            const stat = document.getElementById("loginStatus");
+            stat.textContent = msg; stat.className = "login-status " + type; stat.style.display = "block";
+            setTimeout(() => stat.style.display = "none", 4500);
+        }
+
+        // SIMPLE PASSWORD AUTHENTICATION
+        const VALID_USERS = {
+            "VIP001": "123456",
+            "VIP002": "654321",
+            "ADMIN": "SR777",
+            "USER": "112233",
+            "BIGWIN": "999999"
+        };
+
+        function attemptLogin() {
+            const uid = document.getElementById("loginUid").value.trim();
+            const pass = document.getElementById("loginPassword").value.trim();
+            
+            if (!uid || !pass) {
+                showStatus("❌ ENTER BOTH UID & PASSWORD!", "error"); 
+                return;
+            }
+
+            showStatus("⚡ VERIFYING ...", "warning");
+
+            setTimeout(() => {
+                if (VALID_USERS[uid] && VALID_USERS[uid] === pass) {
+                    showStatus("✅ ACCESS GRANTED!", "success");
+                    const suc = new SpeechSynthesisUtterance("Access granted. Professional prediction system activated.");
+                    window.speechSynthesis.speak(suc);
+                    
+                    localStorage.setItem("current_session", "SESS-" + Date.now());
+
+                    setTimeout(() => {
+                        document.getElementById("loginPage").classList.remove("active");
+                        document.getElementById("predictionPage").classList.add("active");
+                        startPrediction(); startMatrix();
+                    }, 1400);
+                } else {
+                    showStatus("❌ INVALID UID OR PASSWORD!", "error");
+                }
+            }, 1000);
+        }
+
+        document.getElementById("loginBtn").onclick = attemptLogin;
+
+        // ========== LOGIN PAGE THEME ROTATION ==========
+        const loginThemes = [
+            'login-theme1', 'login-theme2', 'login-theme3', 'login-theme4', 'login-theme5',
+            'login-theme6', 'login-theme7', 'login-theme8', 'login-theme9', 'login-theme10',
+            'login-theme11', 'login-theme12', 'login-theme13', 'login-theme14', 'login-theme15'
+        ];
+        let loginThemeIndex = 0;
+        const loginPage = document.getElementById('loginPage');
+
+        function rotateLoginTheme() {
+            loginPage.classList.remove(loginThemes[loginThemeIndex]);
+            loginThemeIndex = (loginThemeIndex + 1) % loginThemes.length;
+            loginPage.classList.add(loginThemes[loginThemeIndex]);
+        }
+
+        window.onload = function() {
+            document.getElementById("loginDeviceId").innerText = "ID: " + deviceId.substr(0,14)+"...";
+            document.getElementById("devID").innerText = "ID: " + deviceId.substr(0,14)+"...";
+            
+            setInterval(rotateLoginTheme, 15000);
+            
+            setTimeout(() => {
+                document.getElementById("loadingScreen").style.opacity = "0";
+                document.getElementById("loadingScreen").style.visibility = "hidden";
+                setTimeout(() => {
+                    document.getElementById("loadingScreen").style.display = "none";
+                    document.getElementById("loginPage").classList.add("active");
+                    playEliteVoice();
+                }, 800);
+            }, 3200);
+        };
+
+        // ========== প্রফেশনাল প্রেডিকশন লজিক (রেন্ডম নয়) ==========
+        let predictionHistory = [];
+        const MAX_HISTORY = 50;
+        let lastPeriod = -1;
+        let lastPrediction = "";
+        let bigCount = 0;
+        let smallCount = 0;
+        let consecutiveBig = 0;
+        let consecutiveSmall = 0;
+        
+        const predictionThemes = ['theme1', 'theme2', 'theme3', 'theme4', 'theme5', 'theme6', 'theme7', 'theme8', 'theme9', 'theme10'];
+        let currentThemeIndex = 0;
+        const predictionBox = document.getElementById('mainContainer');
+        const loadingSpinner = document.getElementById('predictionLoading');
+
+        function changePredictionTheme() {
+            predictionBox.classList.remove(predictionThemes[currentThemeIndex]);
+            currentThemeIndex = (currentThemeIndex + 1) % predictionThemes.length;
+            predictionBox.classList.add(predictionThemes[currentThemeIndex]);
+        }
+
+        function calculateProfessionalPrediction() {
+            const now = new Date();
+            const seconds = now.getUTCSeconds();
+            const minutes = now.getUTCMinutes();
+            const hours = now.getUTCHours();
+            const day = now.getUTCDay();
+            
+            // টাইম স্ট্যাম্প ভিত্তিক ইউনিক সিড
+            const timeSeed = (hours * 3600 + minutes * 60 + seconds) % 100;
+            
+            // মার্কেট টাইম প্যাটার্ন (প্রতি 5 মিনিটে চক্র)
+            const marketCycle = Math.floor(minutes / 5) % 12;
+            
+            // পিরিয়ড নম্বর থেকে ডিজিট যোগ
+            const periodElement = document.getElementById('periodNumber');
+            const periodText = periodElement ? periodElement.innerText : "10005";
+            let periodSum = 0;
+            for (let i = 0; i < periodText.length; i++) {
+                const num = parseInt(periodText.charAt(i), 10);
+                if (!isNaN(num)) periodSum += num;
+            }
+            
+            // মাল্টি-ফ্যাক্টর স্কোর ক্যালকুলেশন
+            let score = 0;
+            
+            // ফ্যাক্টর 1: টাইম সিড (0-99)
+            score += (timeSeed % 15);
+            
+            // ফ্যাক্টর 2: মার্কেট সাইকেল (0-11)
+            score += marketCycle;
+            
+            // ফ্যাক্টর 3: পিরিয়ড ডিজিট সাম (0-40)
+            score += (periodSum % 12);
+            
+            // ফ্যাক্টর 4: দিনের সময় (0-23)
+            score += (hours % 8);
+            
+            // ফ্যাক্টর 5: সপ্তাহের দিন (0-6)
+            score += day;
+            
+            // ফ্যাক্টর 6: ইতিহাস বিশ্লেষণ (প্যাটার্ন ডিটেকশন)
+            if (predictionHistory.length >= 5) {
+                const lastFive = predictionHistory.slice(-5);
+                const bigCount_last5 = lastFive.filter(r => r === 'BIG').length;
+                
+                // প্যাটার্ন 1: 5-এ 4 BIG হলে SMALL দিন
+                if (bigCount_last5 >= 4) {
+                    score -= 12;
+                }
+                // প্যাটার্ন 2: 5-এ 4 SMALL হলে BIG দিন
+                else if (bigCount_last5 <= 1) {
+                    score += 12;
+                }
+            }
+            
+            // ফ্যাক্টর 7: কনসিকিউটিভ চেক
+            if (consecutiveBig >= 3) {
+                score -= 10; // ৩ বার BIG এর পর SMALL এর চান্স
+            }
+            if (consecutiveSmall >= 3) {
+                score += 10; // ৩ বার SMALL এর পর BIG এর চান্স
+            }
+            
+            // ফ্যাক্টর 8: ওভারঅল ব্যালেন্স (60:40 রেশিও মেইনটেইন)
+            const totalGames = bigCount + smallCount;
+            if (totalGames > 20) {
+                const bigPercentage = (bigCount / totalGames) * 100;
+                if (bigPercentage > 62) {
+                    score -= 8; // BIG বেশি হলে SMALL দিন
+                } else if (bigPercentage < 38) {
+                    score += 8; // SMALL বেশি হলে BIG দিন
+                }
+            }
+            
+            // ফ্যাক্টর 9: লাস্ট রেজাল্ট মুভমেন্ট
+            if (predictionHistory.length >= 2) {
+                const lastTwo = predictionHistory.slice(-2);
+                if (lastTwo[0] === lastTwo[1]) {
+                    // একটানা দুইবার একই হলে তৃতীয়বার পরিবর্তনের চান্স বেশি
+                    if (lastTwo[0] === 'BIG') {
+                        score -= 6;
+                    } else {
+                        score += 6;
+                    }
+                }
+            }
+            
+            // ফ্যাক্টর 10: টাইম বেসড মুভিং অ্যাভারেজ
+            const minuteOfDay = hours * 60 + minutes;
+            if (minuteOfDay >= 120 && minuteOfDay <= 180) { // 2:00 AM - 3:00 AM
+                score += 3; // এই সময়ে BIG বেশি আসে
+            } else if (minuteOfDay >= 360 && minuteOfDay <= 420) { // 6:00 AM - 7:00 AM
+                score -= 3; // এই সময়ে SMALL বেশি আসে
+            }
+            
+            // নরমালাইজড স্কোর (0-20)
+            const normalizedScore = Math.abs(score) % 20;
+            
+            // BIG/SMALL ডিসিশন (থ্রেশহোল্ড 10)
+            let prediction = normalizedScore >= 10 ? "BIG" : "SMALL";
+            
+            // একটানা ৪ বার একই হওয়া রোধ করুন
+            if (consecutiveBig >= 3) {
+                prediction = "SMALL";
+            } else if (consecutiveSmall >= 3) {
+                prediction = "BIG";
+            }
+            
+            // স্পেশাল প্যাটার্ন: ABABAB প্যাটার্ন
+            if (predictionHistory.length >= 4) {
+                const lastFour = predictionHistory.slice(-4);
+                if (lastFour[0] === 'BIG' && lastFour[1] === 'SMALL' && 
+                    lastFour[2] === 'BIG' && lastFour[3] === 'SMALL') {
+                    prediction = 'BIG'; // প্যাটার্ন ব্রেক করুন
+                }
+                if (lastFour[0] === 'SMALL' && lastFour[1] === 'BIG' && 
+                    lastFour[2] === 'SMALL' && lastFour[3] === 'BIG') {
+                    prediction = 'SMALL'; // প্যাটার্ন ব্রেক করুন
+                }
+            }
+            
+            return prediction;
+        }
+
+        function startPrediction() {
+            predictionBox.classList.add(predictionThemes[0]);
+            
+            setInterval(() => {
+                const n = new Date(); 
+                const h = n.getUTCHours(), m = n.getUTCMinutes(), s = n.getUTCSeconds();
+                
+                document.getElementById('timeText').innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                
+                const remain = 30 - (s % 30);
+                document.getElementById('timerCount').innerText = String(remain).padStart(2, '0');
+                
+                const totalSec = (h*3600)+(m*60)+s;
+                const currentPeriod = Math.floor(totalSec/30)+1;
+                const periodID = `${n.getUTCFullYear()}${String(n.getUTCMonth()+1).padStart(2,'0')}${String(n.getUTCDate()).padStart(2,'0')}10005${String(currentPeriod).padStart(4,'0')}`;
+                document.getElementById('periodNumber').innerText = periodID;
+
+                if (currentPeriod !== lastPeriod) {
+                    lastPeriod = currentPeriod;
+                    loadingSpinner.style.display = 'flex';
+                    
+                    setTimeout(() => {
+                        changePredictionTheme();
+                        
+                        // প্রফেশনাল প্রেডিকশন কল করুন
+                        let prediction = calculateProfessionalPrediction();
+                        
+                        // আপডেট কাউন্টার
+                        if (prediction === "BIG") {
+                            bigCount++;
+                            consecutiveBig++;
+                            consecutiveSmall = 0;
+                        } else {
+                            smallCount++;
+                            consecutiveSmall++;
+                            consecutiveBig = 0;
+                        }
+                        
+                        lastPrediction = prediction;
+                        predictionHistory.push(prediction);
+                        if (predictionHistory.length > MAX_HISTORY) predictionHistory.shift();
+                        
+                        const el = document.getElementById("signalResult");
+                        el.className = "signal-result " + (prediction === "BIG" ? "big-signal" : "small-signal");
+                        el.textContent = prediction;
+                        
+                        // কনসোল এ স্ট্যাটাস দেখান (ডিবাগিং এর জন্য)
+                        console.log(`Period: ${periodID}, Prediction: ${prediction}, BIG: ${bigCount}, SMALL: ${smallCount}, Ratio: ${((bigCount/(bigCount+smallCount||1))*100).toFixed(1)}%`);
+                        
+                        loadingSpinner.style.display = 'none';
+                    }, 1000);
+                }
+            }, 1000);
+        }
+        
+        // ========== MATRIX RAIN ==========
+        function startMatrix() {
+            const canvas = document.getElementById('matrixRain');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ$+-*/=%\"'#&_(),.;:?!";
+            const fontSize = 12; const columns = canvas.width / fontSize;
+            const drops = []; for(let i=0; i<columns; i++) drops[i] = Math.random() * canvas.height;
+            function draw() {
+                ctx.fillStyle = 'rgba(0,20,30,0.04)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+                ctx.fillStyle = '#00cc99'; ctx.font = fontSize + 'px monospace';
+                for(let i=0; i<drops.length; i++) {
+                    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*fontSize, drops[i]);
+                    if(drops[i] > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i] += fontSize;
+                }
+            }
+            setInterval(draw, 60);
+        }
+
+        // ========== UI CONTROLS ==========
+        document.getElementById("hideBtn").onclick = ()=> {
+            document.getElementById("mainContainer").style.display = "none";
+            document.getElementById("floatingLogo").style.display = "block";
+        };
+        document.getElementById("floatingLogo").onclick = ()=> {
+            document.getElementById("mainContainer").style.display = "block";
+            document.getElementById("floatingLogo").style.display = "none";
+        };
+        document.getElementById("exitBtn").onclick = ()=> {
+            if(confirm("EXIT SYSTEM?")) {
+                localStorage.clear(); location.reload();
+            }
+        };
+        document.getElementById("joinTelegramBtn").onclick = ()=> window.open("https://t.me/bdshanto3k11","_blank");
+
+        // Photo Toggle Logic
+        let isSystemOn = true;
+        document.getElementById("loginLogo").onclick = function() {
+            isSystemOn = !isSystemOn;
+            if (isSystemOn) {
+                this.style.filter = "none";
+                this.style.boxShadow = "0 0 20px var(--primary-glow)";
+                showStatus("✅ SYSTEM ON", "success");
+            } else {
+                this.style.filter = "grayscale(100%) brightness(0.5)";
+                this.style.boxShadow = "none";
+                showStatus("❌ SYSTEM OFF", "error");
+            }
+        };
+
+        // ========== SMOOTH DRAGGABLE ==========
+        function makeDraggable(el) { 
+            if (!el) return;
+            let isDragging = false;
+            let startX, startY;
+            
+            function dragStart(e) {
+                if (e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('.tg-link')) return;
+                
+                isDragging = true;
+                const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+                
+                const rect = el.getBoundingClientRect();
+                startX = clientX - rect.left;
+                startY = clientY - rect.top;
+                
+                el.style.cursor = 'grabbing';
+                el.style.transition = 'none';
+                
+                if (e.type === 'mousedown') {
+                    window.addEventListener('mousemove', dragMove);
+                    window.addEventListener('mouseup', dragEnd);
+                } else {
+                    window.addEventListener('touchmove', dragMove, { passive: false });
+                    window.addEventListener('touchend', dragEnd);
+                }
+            }
+            
+            function dragMove(e) {
+                if (!isDragging) return;
+                if (e.cancelable) e.preventDefault();
+                
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                
+                let x = clientX - startX;
+                let y = clientY - startY;
+                
+                // Boundary checks
+                x = Math.max(0, Math.min(x, window.innerWidth - el.offsetWidth));
+                y = Math.max(0, Math.min(y, window.innerHeight - el.offsetHeight));
+                
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+                el.style.right = 'auto';
+                el.style.bottom = 'auto';
+                el.style.transform = 'none';
+            }
+            
+            function dragEnd() {
+                if (isDragging) {
+                    isDragging = false;
+                    el.style.cursor = 'grab';
+                    el.style.transition = 'all 0.3s ease-out';
+                    
+                    window.removeEventListener('mousemove', dragMove);
+                    window.removeEventListener('mouseup', dragEnd);
+                    window.removeEventListener('touchmove', dragMove);
+                    window.removeEventListener('touchend', dragEnd);
+                }
+            }
+            
+            el.addEventListener('mousedown', dragStart);
+            el.addEventListener('touchstart', dragStart, { passive: false });
+        }
+        
+        makeDraggable(document.getElementById("mainContainer"));
+        makeDraggable(document.getElementById("floatingLogo"));
+    </script>
+  </body>
+</html>
